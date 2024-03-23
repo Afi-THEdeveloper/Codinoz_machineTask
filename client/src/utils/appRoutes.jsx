@@ -6,6 +6,12 @@ import { serverUrls } from "./serverUrls";
 import PublicPage from "../pages/publicPage";
 import LoginPage from "../pages/login";
 import RegisterPage from "../pages/register";
+import Otp from "../pages/otp";
+import IsLoggedIn from "../components/protectedComp/isloggedUser";
+
+import IsLoggedOut from "../components/protectedComp/isloggedOutUser";
+import Home from "../pages/Home";
+
 
 const AppRoutes = () => {
   const { loading } = useSelector((state) => state.loadings);
@@ -43,10 +49,18 @@ const AppRoutes = () => {
       <Routes>
         {/* public route */}
         <Route path={serverUrls.landing} element={<PublicPage />} />
-        <Route path={serverUrls.login} element={<LoginPage />} />
-        <Route path={serverUrls.register} element={<RegisterPage />} />
 
-        {/* protected routes */}
+        {/* for not logged users */}
+        <Route element={<IsLoggedOut />}>
+          <Route path={serverUrls.login} element={<LoginPage />} />
+          <Route path={serverUrls.register} element={<RegisterPage />} />
+          <Route path={serverUrls.otp} element={<Otp />} />
+        </Route>
+
+        {/* protected routes, for logged in users */}
+        <Route element={<IsLoggedIn />}>
+          <Route path={serverUrls.home} element={<Home />} />
+        </Route>
       </Routes>
     </div>
   );

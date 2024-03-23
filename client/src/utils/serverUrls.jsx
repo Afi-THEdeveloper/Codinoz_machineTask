@@ -1,8 +1,11 @@
 export const serverUrls = {
-    landing:'/',
+  landing: "/",
 
+  //public routes
+  login: "/login",
+  register: "/register",
+  otp: "/otp",
 
-    //userRoutes
-    login:'/login',
-    register:'/register',
-}
+  //protected routes
+  home: "/home",
+};

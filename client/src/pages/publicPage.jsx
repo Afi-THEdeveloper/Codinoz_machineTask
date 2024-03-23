@@ -11,12 +11,18 @@ const PublicPage = () => {
           <MyH1 title={"Welcome to Codinoz"} />
         </div>
         <div className="grid grid-cols-2 gap-4">
-          <button className="bg-slate-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
-            <Link to={serverUrls.login}>Login</Link>
-          </button>
-          <button className="bg-slate-500 hover:bg-green-600 text-white font-semibold py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-300">
-            <Link to={serverUrls.register}>Register</Link>
-          </button>
+          <Link
+            to={serverUrls.login}
+            className="bg-slate-500 p-12 hover:bg-green-600 text-white font-semibold py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-300"
+          >
+            Login
+          </Link>
+          <Link
+            to={serverUrls.register}
+            className="bg-slate-500 p-8 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-300"
+          >
+            Register
+          </Link>
         </div>
       </div>
     </div>

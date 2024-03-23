@@ -14,7 +14,7 @@ app.use(express.json());
 
 //route configuration
 const userRoutes = require("./routes/userRoutes");
-app.use("/api/users", userRoutes);
+app.use("/api/user", userRoutes);
 
 
 
