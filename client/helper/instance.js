@@ -1,14 +1,19 @@
 import axios from "axios";
 import { API_BASE_URL } from "../config/api";
+import toast from "react-hot-toast";
 
-// Create a new instance of Axios with custom configurations
-const userRequest = axios.create({
-  baseURL: API_BASE_URL, // Replace this with your backend base URL
-  timeout: 5000, // Set a timeout of 5 seconds for requests
-  headers: {
-    "Content-Type": "application/json", // Set the default content type for requests
-    // You can add any other default headers here if needed
-  },
-});
+const user = axios.create({ baseURL: API_BASE_URL });
 
-export default userRequest;
+export const userRequest = ({ ...options }) => {
+  //the Authorization header
+  user.defaults.headers.common.Authorization = JSON.parse(
+    localStorage.getItem("UserToken")
+  );
+  const onSuccess = (response) => response;
+  const onError = (error) => {
+    console.log("axios interceptor", error);
+    toast.error(error?.response?.data?.error);
+    return error;
+  };
+  return user(options).then(onSuccess).catch(onError);
+};  

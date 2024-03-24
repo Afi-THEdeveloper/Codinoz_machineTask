@@ -21,7 +21,7 @@ exports.registerUser = catchAsync(async (req, res) => {
   const { username, email, phone, address, password } = req.body;
   const isUserExists = await User.findOne({ email: req.body.email });
   if (isUserExists) {
-    return res.json({ error: "user already exists" });
+    return res.status(400).json({ error: "user already exists" });
   } else {
     //hashing password
     const secPassword = await securePassword(password);
@@ -138,4 +138,13 @@ exports.loginUser = catchAsync(async (req, res) => {
   });
   user.password = "";
   res.status(200).json({ success: "Login successful", token, user });
+});
+
+exports.fetchUser = catchAsync(async (req, res) => {
+  console.log('userId',req?.userId);
+  const user = await User.findById(req.userId);
+  console.log('user',user);
+  if (user) {
+    return res.status(200).json({ success: "user fetched", user });
+  }
 });

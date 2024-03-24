@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { showLoading, hideLoading } from "../redux/slices/loadingSlice";
 import { serverUrls } from "../utils/serverUrls";
 import ErrorMsg from "../components/errorMsg";
-import userRequest from "../../helper/instance";
+import {userRequest} from "../../helper/instance";
 import { apiEndpoints } from "../utils/api";
 import toast from "react-hot-toast";
 
@@ -56,18 +56,18 @@ const RegisterPage = () => {
     onSubmit: (values) => {
       console.log(values);
       dispatch(showLoading());
-      userRequest
-        .post(apiEndpoints.postRegister, values)
+      userRequest({
+        url: apiEndpoints.postRegister,
+        method: "post",
+        data: values,
+      })
         .then((res) => {
           if (res?.data?.success) {
             navigate(serverUrls.otp, { state: { email: res.data?.email } });
-          } else {
-            toast.error(res?.data?.error);
           }
         })
         .catch((err) => {
           console.log(err);
-          toast.error(err.message);
         })
         .finally(() => {
           dispatch(hideLoading());

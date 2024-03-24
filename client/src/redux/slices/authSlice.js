@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { apiEndpoints } from "../../utils/api";
-import userRequest from "../../../helper/instance";
 import { toast } from "react-hot-toast";
 import { hideLoading, showLoading } from "./loadingSlice";
+import { userRequest } from "../../../helper/instance";
 
 const initialState = {
   isError: false,
@@ -47,18 +47,18 @@ export const AuthSlice = createSlice({
 export const loginThunk = (data) => async (dispatch) => {
   try {
     dispatch(showLoading());
-    const res = await userRequest.post(apiEndpoints.postLogin, data);
+    const res = await userRequest({
+      url: apiEndpoints.postLogin,
+      method: "post",
+      data,
+    });
     if (res.data?.success) {
       toast.success(res.data.success);
       dispatch(loginSuccess(res.data));
-    } else {
-      toast.error(res.data.error);
-      dispatch(loginReject(res.data));
     }
   } catch (error) {
     console.log(error);
-    toast.error("No response received from the server");
-    dispatch(loginReject({ error: "No response received from the server" }));
+    dispatch(loginReject({ error: error.response?.data.error }));
   } finally {
     dispatch(hideLoading());
   }

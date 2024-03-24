@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../redux/slices/loadingSlice";
-import userRequest from "../../helper/instance";
+import { userRequest } from "../../helper/instance";
 import { apiEndpoints } from "../utils/api";
 import { useFormik } from "formik";
 import { serverUrls } from "../utils/serverUrls";
@@ -61,8 +61,11 @@ const Otp = () => {
       const otp = `${values.digit1}${values.digit2}${values.digit3}${values.digit4}`;
 
       dispatch(showLoading());
-      userRequest
-        .post(apiEndpoints.verifyOtp, { email, otp })
+      userRequest({
+        url: apiEndpoints.verifyOtp,
+        method: "post",
+        data: { email, otp },
+      })
         .then((res) => {
           if (res.data?.success) {
             navigate(serverUrls.login);
@@ -71,7 +74,6 @@ const Otp = () => {
         })
         .catch((err) => {
           console.error(err);
-          toast.error("invalid otp");
         })
         .finally(() => {
           dispatch(hideLoading());
@@ -81,8 +83,11 @@ const Otp = () => {
 
   const resendOtp = () => {
     dispatch(showLoading());
-    userRequest
-      .post(apiEndpoints.resendOtp, { email })
+    userRequest({
+      url: apiEndpoints.resendOtp,
+      method: "post",
+      data: { email },
+    })
       .then((res) => {
         if (res.data.success) {
           toast.success(res.data.success);

@@ -21,7 +21,6 @@ const loginSchema = Yup.object().shape({
 
 const LoginPage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [showPswd, setShowPswd] = useState(false);
 
   const formik = useFormik({
@@ -67,9 +66,9 @@ const LoginPage = () => {
                   onClick={() => setShowPswd(!showPswd)}
                 >
                   {showPswd ? (
-                    <FiEye color="white" />
+                    <FiEye color="black" />
                   ) : (
-                    <FiEyeOff color="white" />
+                    <FiEyeOff color="black" />
                   )}
                 </button>
               </div>
